@@ -7,6 +7,9 @@ import { FormsModule } from '@angular/forms';
 import { CreditService } from '../../core/services/credit';
 
 import { AlertService } from '../../core/services/alert';
+import { ChangeDetectorRef } from '@angular/core';
+import { Router } from '@angular/router';
+
 
 @Component({
 
@@ -24,9 +27,10 @@ import { AlertService } from '../../core/services/alert';
 })
 
 export class Requests implements OnInit {
-
+    constructor(private cd: ChangeDetectorRef) { }
     private service = inject(CreditService);
     private alert = inject(AlertService);
+    private router = inject(Router);
     requests: any[] = [];
 
     status = '';
@@ -36,52 +40,65 @@ export class Requests implements OnInit {
 
     }
 
-    load() {
 
+
+    load() {
         this.service.getAll(this.status).subscribe({
             next: (response: any) => {
-                this.requests = response.data;
-            },
-
-            error: (error) => {
-                console.log(error);
-
+                const data = response.data;
+                this.requests = this.status
+                    ? data.filter((r: any) => r.status === this.status)
+                    : data;
+                this.cd.detectChanges();
             }
-
         });
-
     }
 
 
-    changeStatus(id: number,status: string) {
 
-        this.alert.confirm('Confirm action',`Do you want to ${status.toLowerCase()} this request?`)
+    changeStatus(id: number, status: string) {
+
+        this.alert.commentDialog(`${status} request`)
 
             .then((result) => {
-                if (result.isConfirmed) {
-                    this.service.updateStatus(
-                            id,
-                            {
-                                status,
-                                comment: 'Updated from frontend'
-                            }
 
-                        ).subscribe({
+                if (result.isConfirmed) {
+
+                    this.service.updateStatus(id,
+                        {
+                            status,
+                            comment: result.value
+                        }
+
+                    )
+
+                        .subscribe({
                             next: () => {
                                 this.alert.success(
-                                    'Done',
-                                    'Request updated'
+                                    'Success',
+                                    'Request updated successfully'
                                 );
-
                                 this.load();
-
+                            },
+                            error: (error) => {
+                                this.alert.error(
+                                    'Error',
+                                    error?.error?.message ||
+                                    'Unexpected error'
+                                );
                             }
-
                         });
-
                 }
-
             });
+    }
+
+
+
+    goToCreate() {
+
+        this.router.navigate(
+            ['/create']
+        );
 
     }
 

@@ -2,78 +2,104 @@ import { Injectable } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Injectable({
-  providedIn:'root'
+  providedIn: 'root'
 })
 
 export class AlertService {
 
-  success(title:string,message:string){ 
+  success(title: string, message: string) {
 
     return Swal.fire({
 
-      icon:'success',
+      icon: 'success',
 
       title,
 
-      text:message,
+      text: message,
 
-      timer:2000,
+      timer: 2000,
 
-      showConfirmButton:false
+      showConfirmButton: false
 
     });
 
   }
 
 
-  error(title:string,message:string
-  ){
+  error(title: string, message: string
+  ) {
 
     return Swal.fire({
 
-      icon:'error',
+      icon: 'error',
 
       title,
 
-      text:message
+      text: message
 
     });
 
   }
 
 
-  warning(title:string,message:string
-  ){
+  warning(title: string, message: string
+  ) {
 
     return Swal.fire({
 
-      icon:'warning',
+      icon: 'warning',
 
       title,
 
-      text:message
+      text: message
+
+    });
+
+  }
+
+  confirm(title: string, message: string) {
+
+    return Swal.fire({
+
+      icon: 'question',
+      title,
+      text: message,
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'Cancel'
 
     });
 
   }
 
 
-  confirm(title:string,message:string
-  ){
+  commentDialog(title: string) {
 
     return Swal.fire({
 
-      icon:'question',
-
       title,
 
-      text:message,
+      input: 'textarea',
 
-      showCancelButton:true,
+      inputLabel: 'Comment',
 
-      confirmButtonText:'Yes',
+      inputPlaceholder: 'Write a comment...',
 
-      cancelButtonText:'Cancel'
+      showCancelButton: true,
+
+      confirmButtonText: 'Save',
+
+      inputValidator: (value) => {
+
+        if (!value) {
+
+          return 'Comment required';
+
+        }
+
+        return null;
+
+      }
 
     });
 
