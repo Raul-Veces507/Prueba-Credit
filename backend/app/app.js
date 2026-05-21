@@ -1,34 +1,15 @@
-const express=require("express");
-const helmet=require("helmet");
-const cors=require("cors");
+const express = require("express");
 
-const app=express();
+const routes = require("../app/routes/credit.routes");
 
-app.use(
-helmet()
-);
+const { errorMiddleware } = require("./middleware/error.middleware");
 
-app.use(
-cors()
-);
+const app = express();
 
-app.use(
-express.json()
-);
+app.use(express.json());
 
-app.get(
-"/",
-(req,res)=>{
+app.use("/api/v1/credit-requests", routes);
 
-res.json({
+app.use(errorMiddleware);
 
-success:true,
-
-message:"API running"
-
-});
-
-}
-);
-
-module.exports=app;
+module.exports = app;
