@@ -1,52 +1,56 @@
+<!-- Contenedor principal: ocupa toda la altura de la pantalla, con fondo gris claro y centrado -->
 <div class="min-h-screen bg-gray-100 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+
+    <!-- Encabezado del login -->
     <div class="sm:mx-auto sm:w-full sm:max-w-md">
         <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Login
         </h2>
-
     </div>
 
+    <!-- Contenedor del formulario -->
     <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form class="space-y-6"  [formGroup]="form" (ngSubmit)="login()">
+
+            <!-- Formulario reactivo con Angular -->
+            <form class="space-y-6" [formGroup]="form" (ngSubmit)="login()">
+
+                <!-- Campo de email -->
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">
                         Email address
                     </label>
                     <div class="mt-1">
-                        <input id="email" type="email" formControlName="email" placeholder="email" required
-                            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                        <input id="email" type="email" formControlName="email" placeholder="email" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 
+                                   placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 
+                                   focus:border-indigo-500 focus:z-10 sm:text-sm"
                             placeholder="Enter your email address">
                     </div>
                 </div>
 
+                <!-- Campo de password -->
                 <div>
                     <label for="password" class="block text-sm font-medium text-gray-700">
                         Password
                     </label>
                     <div class="mt-1">
-                        <input type="password" formControlName="password"  required
-                            class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                            placeholder="Enter your password">
+                        <input type="password" formControlName="password" required class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 
+                                   placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 
+                                   focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Enter your password">
                     </div>
                 </div>
 
-
-
+                <!-- Botón de login -->
                 <div>
-                    <button type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-
+                    <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent 
+                               text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 
+                               focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Sign in
                     </button>
                 </div>
             </form>
-            <div class="mt-6">
 
 
-
-
-            </div>
         </div>
     </div>
 </div>

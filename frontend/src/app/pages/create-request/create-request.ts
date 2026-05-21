@@ -5,13 +5,16 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CreditService } from '../../core/services/credit';
 import { AlertService } from '../../core/services/alert';
 import { Router } from '@angular/router';
+import { Layout } from '../../shared/components/layout/layout';
 
 @Component({
 
   selector: 'app-create-request',
 
   imports: [
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    Layout
+    
   ],
 
   templateUrl: './create-request.html'

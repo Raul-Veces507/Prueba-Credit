@@ -9,7 +9,7 @@ import { CreditService } from '../../core/services/credit';
 import { AlertService } from '../../core/services/alert';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { Layout } from '../../shared/components/layout/layout';
 
 @Component({
 
@@ -19,7 +19,8 @@ import { Router } from '@angular/router';
 
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        Layout
     ],
 
     templateUrl: './requests.html'
