@@ -4,6 +4,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { CreditService } from '../../core/services/credit';
 import { AlertService } from '../../core/services/alert';
+import { Router } from '@angular/router';
 
 @Component({
 
@@ -24,6 +25,10 @@ export class CreateRequest {
   private service = inject(CreditService);
 
   private alert = inject(AlertService);
+
+  private router = inject(Router);
+
+  
 
   loading = false;
 
@@ -81,11 +86,8 @@ export class CreateRequest {
           this.loading = false;
 
           this.alert.success(
-
             'Success',
-
             'Credit request created successfully'
-
           );
 
           this.form.reset({
@@ -94,6 +96,7 @@ export class CreateRequest {
             termMonths: 6
 
           });
+          this.router.navigate(['/requests']);
 
         },
 
