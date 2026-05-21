@@ -3,30 +3,28 @@
 /**
  * @type { Object.<string, import("knex").Knex.Config> }
  */
+require('dotenv').config();
+
 module.exports = {
 
-development: {
+  development: {
 
-client: 'mysql2',
+    client: 'mysql2',
 
-connection: {
+    connection: {
 
-host: 'localhost',
+      host: process.env.DB_HOST,
 
-user: 'root',
+      port: process.env.DB_PORT,
 
-password: '',
+      user: process.env.DB_USER,
 
-database: 'bluecore'
+      password: process.env.DB_PASSWORD,
 
-},
+      database: process.env.DB_NAME
 
-migrations: {
+    }
 
-directory:'./migrations'
+  }
 
-}
-
-}
-
-}
+};
