@@ -1,1 +1,15 @@
-<p>create-request works!</p>
+<form [formGroup]="form" (ngSubmit)="save()">
+
+    <input formControlName="applicantId" placeholder="Cedula" />
+
+    <input type="number" formControlName="amount" />
+
+    <input type="number" formControlName="termMonths" />
+
+    <button type="submit">
+
+        Guardar
+
+    </button>
+
+</form>

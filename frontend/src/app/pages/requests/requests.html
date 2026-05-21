@@ -1,1 +1,41 @@
-<p>requests works!</p>
+<select [(ngModel)]="status" (change)="load()">
+
+    <option value="">
+        Todos
+    </option>
+
+    <option value="PENDING">
+        Pendiente
+    </option>
+
+    <option value="APPROVED">
+        Aprobado
+    </option>
+
+    <option value="REJECTED">
+        Rechazado
+    </option>
+
+</select>
+
+<div *ngFor="let item of requests">
+
+    {{item.applicantId}}
+
+    {{item.amount}}
+
+    {{item.status}}
+
+    <button (click)="changeStatus(item.id,'APPROVED')">
+
+        Aprobar
+
+    </button>
+
+    <button (click)="changeStatus(item.id,'REJECTED')">
+
+        Rechazar
+
+    </button>
+
+</div>
