@@ -1,21 +1,53 @@
-const express = require("express");
+const express=require("express");
+const cors=require("cors");
+const helmet=require("helmet");
 
-const authRoutes = require("./routes/auth.routes");
-const creditRoutes = require("../app/routes/credit.routes");
+const creditRoutes=
+require("./routes/credit.routes");
 
-const { auth } = require("./middleware/auth.middleware");
-const { errorMiddleware } = require("./middleware/error.middleware");
+const authRoutes=
+require("./routes/auth.routes");
+
+const {
+    errorMiddleware
+}=require(
+"./middleware/error.middleware"
+);
+
+const app=express();
 
 
-const app = express();
+app.use(
+cors({
 
-app.use(express.json());
+origin:"http://localhost:4200",
 
-app.use("/api/v1/credit-requests", auth, creditRoutes);
+credentials:true
+
+})
+);
+
+app.use(
+helmet()
+);
+
+app.use(
+express.json()
+);
 
 
-app.use("/api/v1/auth", authRoutes);
+app.use(
+"/api/v1/auth",
+authRoutes
+);
 
-app.use(errorMiddleware);
+app.use(
+"/api/v1/credit-requests",
+creditRoutes
+);
 
-module.exports = app;
+app.use(
+errorMiddleware
+);
+
+module.exports=app;
