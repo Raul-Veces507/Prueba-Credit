@@ -1,108 +1,82 @@
 import { Component, inject } from '@angular/core';
-import {
-FormBuilder,
-ReactiveFormsModule,
-Validators
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Router } from '@angular/router';
 
 import { AuthService } from '../../core/services/auth';
 
+import { AlertService } from '../../core/services/alert';
+
+
+
 @Component({
 
-selector:'app-login',
+    selector: 'app-login',
 
-imports:[
-ReactiveFormsModule
-],
+    imports: [
+        ReactiveFormsModule
+    ],
 
-templateUrl:'./login.html'
+    templateUrl: './login.html'
 
 })
 
 export class Login {
 
-private fb=inject(
-FormBuilder
-);
+    private alert = inject(AlertService);
 
-private authService=
-inject(
-AuthService
-);
+    private fb = inject(FormBuilder);
 
-private router=
-inject(
-Router
-);
+    private authService = inject(AuthService);
 
-loading=false;
+    private router = inject(Router);
 
-form=this.fb.group({
+    loading = false;
 
-email:[
-'admin@test.com',
+    form = this.fb.group({
 
-[
-Validators.required,
-Validators.email
-]
+        email: [
+            'admin@test.com',
+            [
+                Validators.required,
+                Validators.email
+            ]
+        ],
+        password: [
+            '123456',
+            Validators.required
+        ]
 
-],
-
-password:[
-
-'123456',
-
-Validators.required
-
-]
-
-});
+    });
 
 
-login(){
+    login() {
+        
+        if (this.form.invalid) {
+             this.alert.error('Error', "Debe completar todos los campos correctamente");
+            this.form.markAllAsTouched();
+            return;
+        }
 
-if(
-this.form.invalid
-){
 
-this.form.markAllAsTouched();
+        this.loading = true;
 
-return;
+        this.authService.login(this.form.value).subscribe({
+            next: () => {
 
-}
+                this.router.navigate(['/requests']);
+       
+            },
 
-this.loading=true;
+            error: (error) => {
 
-this.authService
-.login(
-this.form.value
-)
+                this.alert.error('Error', error.error.message);
+                this.loading = false;
 
-.subscribe({
+            }
 
-next:()=>{
+        })
 
-this.router.navigate([
-'/requests'
-]);
-
-},
-
-error:(error)=>{
-
-console.log(
-error
-);
-
-this.loading=false;
-
-}
-
-})
-
-}
+    }
 
 }
