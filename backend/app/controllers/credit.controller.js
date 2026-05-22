@@ -83,6 +83,30 @@ class CreditController {
 
     }
 
+    async getHistory(req, res, next) {
+
+        try {
+
+            const { id } = req.params;
+
+            const data = await service.getHistory(id);
+
+            return res.json({
+
+                success: true,
+                data
+
+            });
+
+        }
+        catch (error) {
+
+            next(error);
+
+        }
+
+    }
+
 }
 
 module.exports =

@@ -8,4 +8,6 @@ router.get("/", controller.findAll);
 
 router.patch("/:id/status", controller.updateStatus);
 
+router.get("/:id/history", controller.getHistory);
+
 module.exports = router;

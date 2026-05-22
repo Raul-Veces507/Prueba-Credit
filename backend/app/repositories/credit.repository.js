@@ -7,7 +7,7 @@ class CreditRepository {
         const [id] = await db("credit_requests")
             .insert({
                 applicantId: data.applicantId,
-                amount:data.amount,
+                amount: data.amount,
                 termMonths: data.termMonths
             });
 
@@ -17,28 +17,28 @@ class CreditRepository {
 
 
     async findById(id) {
-        return db("credit_requests").where({id}).first();
+        return db("credit_requests").where({ id }).first();
     }
 
 
     async findAll(status) {
 
-        let query =db("credit_requests");
+        let query = db("credit_requests");
 
         if (status) {
 
-            query.where("status",status);
+            query.where("status", status);
 
         }
 
-        return query.orderBy("id","desc");
+        return query.orderBy("id", "desc");
 
     }
 
 
-    async updateStatus(id,status) {
+    async updateStatus(id, status) {
 
-        await db("credit_requests").where({id}).update({status});
+        await db("credit_requests").where({ id }).update({ status });
 
         return this.findById(id);
 
@@ -47,7 +47,19 @@ class CreditRepository {
 
     async createHistory(data) {
 
-        return db( "request_history").insert(data);
+        return db("request_history").insert(data);
+
+    }
+
+    async getHistory(id) {
+        return await db("request_history"
+
+        ).where({id: id })
+            .orderBy(
+                "created_at",
+                "desc"
+
+            );
 
     }
 

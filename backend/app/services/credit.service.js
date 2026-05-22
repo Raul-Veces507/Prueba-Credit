@@ -19,7 +19,7 @@ class CreditService {
     }
 
 
-    async updateStatus(id,status,comment) {
+    async updateStatus(id, status, comment) {
 
         const request =
             await repository.findById(id);
@@ -28,7 +28,7 @@ class CreditService {
 
             throw {
                 status: 404,
-                message:"Request not found"
+                message: "Request not found"
             };
 
         }
@@ -38,7 +38,7 @@ class CreditService {
 
             throw {
                 status: 409,
-                message:"Request already processed"
+                message: "Request already processed"
             };
 
         }
@@ -46,14 +46,38 @@ class CreditService {
 
         await repository.createHistory({
             requestId: id,
-            previousStatus:request.status,
-            newStatus:status,
+            previousStatus: request.status,
+            newStatus: status,
             comment
 
         });
 
 
-        return repository.updateStatus(id,status);
+        return repository.updateStatus(id, status);
+
+    }
+
+    async getHistory(id) {
+
+        const request =
+            await repository.findById(
+                id
+            );
+
+        if (!request) {
+
+            throw {
+
+                status: 404,
+                message: "Request not found"
+
+            };
+
+        }
+
+        return repository.getHistory(
+            id
+        );
 
     }
 

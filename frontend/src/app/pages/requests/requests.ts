@@ -47,6 +47,8 @@ export class Requests implements OnInit {
         this.service.getAll(this.status).subscribe({
             next: (response: any) => {
                 const data = response.data;
+                console.log(data);
+                
                 this.requests = this.status
                     ? data.filter((r: any) => r.status === this.status)
                     : data;
