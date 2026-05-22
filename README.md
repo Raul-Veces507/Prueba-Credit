@@ -42,7 +42,7 @@ cp .env.example .env
 ```
 
 Configurar credenciales de base de datos.
-
+```
 PORT=3000
 DB_HOST=localhost
 DB_USER=root
@@ -50,7 +50,7 @@ DB_PASSWORD=
 DB_NAME=Examen
 JWT_SECRET=your_secret_key
 
-
+```
 Ejecutar migraciones:
 
 ```bash
