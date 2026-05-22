@@ -105,4 +105,19 @@ export class AlertService {
 
   }
 
+
+  history(title: string,html: string) {
+
+    return Swal.fire({
+
+      title,
+
+      html,
+
+      width: '700px'
+
+    });
+
+  }
+
 }

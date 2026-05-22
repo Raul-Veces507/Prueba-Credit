@@ -29,9 +29,17 @@ export class CreditService {
   }
 
 
-  updateStatus(id: number,data: any) {
+  updateStatus(id: number, data: any) {
 
-    return this.http.patch(`${this.api}/${id}/status`,data);
+    return this.http.patch(`${this.api}/${id}/status`, data);
+
+  }
+
+  getHistory(id: number) {
+
+    return this.http.get(`${this.api}/${id}/history`
+
+    );
 
   }
 

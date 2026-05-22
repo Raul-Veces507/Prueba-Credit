@@ -48,7 +48,7 @@ export class Requests implements OnInit {
             next: (response: any) => {
                 const data = response.data;
                 console.log(data);
-                
+
                 this.requests = this.status
                     ? data.filter((r: any) => r.status === this.status)
                     : data;
@@ -97,11 +97,52 @@ export class Requests implements OnInit {
 
 
 
-    goToCreate() {
 
-        this.router.navigate(
-            ['/create']
-        );
+
+
+
+
+    viewComments(id: number) {
+
+        this.service.getHistory(id).subscribe({
+            next: (response: any) => {
+                console.log(response)
+
+                const comments = response.data.map((item: any) => {
+
+
+                    // ✅ Formatear fecha
+                    const fecha = new Date(item.created_at).toLocaleString('es-PA', {
+                        dateStyle: 'medium',
+                        timeStyle: 'short'
+                    });
+
+
+                    return `
+                              <div class="border rounded p-3 mb-2 shadow-sm bg-light">
+
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="badge bg-secondary">
+                            Estatus: ${item.newStatus}
+                        </span>
+                    
+                    </div>
+
+                    <div class="text-dark mb-1">
+                        <strong>Actualización:</strong> ${fecha}
+                    </div>
+
+                    <div class="text-dark">
+                        <strong>Comentario:</strong> ${item.comment}
+                    </div>
+
+                </div>
+                `;
+                }).join(''); this.alert.history('Comments History', comments);
+
+            }
+
+        });
 
     }
 

@@ -1,68 +1,76 @@
-
 <app-layout>
 
-<div class="max-w-7xl mx-auto p-6 bg-white shadow-lg rounded-xl border border-gray-200">
-    <!-- Encabezado -->
-    <div class="flex items-center justify-between mb-6">
-        <h2 class="text-lg font-semibold text-gray-800">📋 Solicitudes de Crédito</h2>
-     
-    </div>
+    <div class="w-full max-w-7xl mx-auto p-3 sm:p-6 bg-white shadow-lg rounded-xl border border-gray-200">
+        <!-- Encabezado -->
+        <div class="flex items-center justify-between mb-6">
+            <h2 class="text-lg font-semibold text-gray-800">📋 Solicitudes de Crédito</h2>
 
-    <!-- Filtro -->
-    <div class="mb-4">
-        <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por estado</label>
-        <select [(ngModel)]="status" (ngModelChange)="load()"
-            class="w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">Todos</option>
-            <option value="PENDING">Pendiente</option>
-            <option value="APPROVED">Aprobado</option>
-            <option value="REJECTED">Rechazado</option>
-        </select>
+        </div>
 
-    </div>
+        <!-- Filtro -->
+        <div class="mb-4">
+            <label for="status" class="block text-sm font-medium text-gray-700 mb-2">Filtrar por estado</label>
+            <select [(ngModel)]="status" (ngModelChange)="load()"
+                class="w-full sm:w-60  px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <option value="">Todos</option>
+                <option value="PENDING">Pendiente</option>
+                <option value="APPROVED">Aprobado</option>
+                <option value="REJECTED">Rechazado</option>
+            </select>
 
-    <!-- Tabla -->
-    <div class="relative overflow-x-auto rounded-lg border border-gray-200">
-        <table class="w-full text-sm text-left text-gray-700">
-            <thead class="bg-gray-100 border-b">
-                <tr>
-                    <th class="px-6 py-3 font-medium">Solicitante</th>
-                    <th class="px-6 py-3 font-medium">Monto</th>
-                    <th class="px-6 py-3 font-medium">Estado</th>
-                    <th class="px-6 py-3 font-medium">Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of requests" class="hover:bg-gray-50 transition">
-                    <td class="px-6 py-4 font-medium text-gray-900">{{item.applicantId}}</td>
-                    <td class="px-6 py-4">{{item.amount | currency:'USD'}}</td>
-                    <td class="px-6 py-4">
-                        <span [ngClass]="{
+        </div>
+
+        <!-- Tabla -->
+        <div class="relative overflow-x-auto rounded-lg border border-gray-200">
+            <table class="w-full text-sm text-left text-gray-700">
+                <thead class="bg-gray-100 border-b">
+                    <tr>
+                        <th class="px-6 py-3 font-medium">Solicitante</th>
+                        <th class="px-6 py-3 font-medium">Monto</th>
+                        <th class="px-6 py-3 font-medium">Estado</th>
+                        <th class="px-6 py-3 font-medium">Acciones</th>
+                        <th class="px-6 py-3 font-medium">Historial</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of requests" class="hover:bg-gray-50 transition">
+                        <td class="px-6 py-4 font-medium text-gray-900">{{item.applicantId}}</td>
+                        <td class="px-6 py-4">{{item.amount | currency:'USD'}}</td>
+                        <td class="px-6 py-4">
+                            <span [ngClass]="{
               'bg-yellow-100 text-yellow-700': item.status === 'PENDING',
               'bg-green-100 text-green-700': item.status === 'APPROVED',
               'bg-red-100 text-red-700': item.status === 'REJECTED'
             }" class="px-3 py-1 text-xs font-semibold rounded-full">
-                            {{item.status}}
-                        </span>
-                    </td>
-                    <td class="px-6 py-4">
-                        <ng-container *ngIf="item.status === 'PENDING'">
-                            <button (click)="changeStatus(item.id,'APPROVED')"
-                                class="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none">
-                                Aprobar
-                            </button>
-                            <button (click)="changeStatus(item.id,'REJECTED')"
-                                class="ml-2 px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none">
-                                Rechazar
-                            </button>
-                        </ng-container>
-                    </td>
+                                {{item.status}}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4">
+                            <ng-container *ngIf="item.status === 'PENDING'">
+                                <button (click)="changeStatus(item.id,'APPROVED')"
+                                    class="px-3 py-1 text-sm font-medium text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none">
+                                    Aprobar
+                                </button>
+                                <button (click)="changeStatus(item.id,'REJECTED')"
+                                    class="ml-2 px-3 py-1 text-sm font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none">
+                                    Rechazar
+                                </button>
+                            </ng-container>
+                        </td>
+                        <td class="px-6 py-4">
+                            <button *ngIf="item.status === 'APPROVED' || item.status === 'REJECTED'"
+                                (click)="viewComments(item.id)" class="bg-blue-500 text-white px-2 py-1 rounded">
 
-                </tr>
-            </tbody>
-        </table>
+                                Ver comentarios
+
+                            </button>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 
 
 </app-layout>
