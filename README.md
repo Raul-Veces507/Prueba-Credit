@@ -92,6 +92,13 @@ npm run test:unit
 ---
 
 ## Docker
+Configurar credenciales docker-compose.yml.
+    environment:
+    DB_HOST: localhost
+    DB_USER: root
+    DB_PASSWORD: ''
+    DB_NAME: database
+    JWT_SECRET:your_secret_key
 
 Ejecutar:
 
