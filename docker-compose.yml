@@ -15,8 +15,8 @@ services:
       DB_HOST: localhost
       DB_USER: root
       DB_PASSWORD: ''
-      DB_NAME: database
-      JWT_SECRET: 9ZZEeV9V5jmEYAxl6hN7CEqjndhotdsbxcmQogdw8Zc
+      DB_NAME: Examen
+      JWT_SECRET: your_secret_key
 
   frontend:
     build:
