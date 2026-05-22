@@ -1,22 +1,52 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { Login } from './login';
+describe('Login form validation', () => {
 
-describe('Login', () => {
-  let component: Login;
-  let fixture: ComponentFixture<Login>;
+  const fb = new FormBuilder();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [Login],
-    }).compileComponents();
+  const form = fb.group({
 
-    fixture = TestBed.createComponent(Login);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
+    username: ['', Validators.required],
+
+    password: [
+      '',
+      [
+        Validators.required,
+        Validators.minLength(4)
+      ]
+    ]
+
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should be invalid when fields are empty', () => {
+
+    form.patchValue({
+
+      username:'',
+      password:''
+
+    });
+
+    expect(
+      form.valid
+    ).toBeFalsy();
+
   });
+
+
+  it('should be valid when credentials are correct', () => {
+
+    form.patchValue({
+
+      username:'admin',
+      password:'1234'
+
+    });
+
+    expect(
+      form.valid
+    ).toBeTruthy();
+
+  });
+
 });

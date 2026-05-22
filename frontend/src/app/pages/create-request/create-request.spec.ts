@@ -1,22 +1,64 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormBuilder, Validators } from '@angular/forms';
 
-import { CreateRequest } from './create-request';
+describe('Credit request form validation', () => {
 
-describe('CreateRequest', () => {
-  let component: CreateRequest;
-  let fixture: ComponentFixture<CreateRequest>;
+  const fb = new FormBuilder();
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [CreateRequest],
-    }).compileComponents();
+  const form = fb.group({
 
-    fixture = TestBed.createComponent(CreateRequest);
-    component = fixture.componentInstance;
-    await fixture.whenStable();
+    applicantId: ['', Validators.required],
+
+    amount: [
+      500,
+      [
+        Validators.required,
+        Validators.min(500),
+        Validators.max(50000)
+      ]
+    ],
+
+    termMonths: [
+      6,
+      [
+        Validators.required,
+        Validators.min(6),
+        Validators.max(60)
+      ]
+    ]
+
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should be invalid when amount is below minimum', () => {
+
+    form.patchValue({
+
+      applicantId:'12345678',
+      amount:100,
+      termMonths:12
+
+    });
+
+    expect(
+      form.valid
+    ).toBeFalsy();
+
   });
+
+
+  it('should be valid with correct values',()=>{
+
+    form.patchValue({
+
+      applicantId:'12345678',
+      amount:1000,
+      termMonths:12
+
+    });
+
+    expect(
+      form.valid
+    ).toBeTruthy();
+
+  });
+
 });
