@@ -1,0 +1,31 @@
+services:
+
+  backend:
+    build:
+      context: ./backend
+
+    container_name: credit-api
+
+    ports:
+      - "3000:3000"
+
+    restart: always
+
+    environment:
+      DB_HOST: localhost
+      DB_USER: root
+      DB_PASSWORD: ''
+      DB_NAME: database
+      JWT_SECRET: 9ZZEeV9V5jmEYAxl6hN7CEqjndhotdsbxcmQogdw8Zc
+
+  frontend:
+    build:
+      context: ./frontend
+
+    container_name: credit-front
+
+    ports:
+      - "4200:80"
+
+    depends_on:
+      - backend
